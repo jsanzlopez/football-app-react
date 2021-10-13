@@ -1,0 +1,14 @@
+
+.home-top-container {
+  display: flex;
+  justify-content: center;
+  .app-title {
+    background-color: lightblue;
+    padding: 15px;
+    border-radius: 4px;
+  }
+}
+.version-container {
+  margin-top: 10px !important;
+  font-size: 14px;
+}
