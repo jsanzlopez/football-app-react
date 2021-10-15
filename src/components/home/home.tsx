@@ -3,7 +3,7 @@ import './home.scss';
 import moment, { Moment } from 'moment';
 import { Col, Container, Row } from 'react-bootstrap';
 import PlayerList from '../PlayerList/PlayerList';
-import { Position, PositionProps } from '../../models/position.model';
+import { Position } from '../../models/position.model';
 export interface IAppProps {
 }
 
@@ -19,10 +19,6 @@ export default class Home extends React.Component<IAppProps, IAppState> {
     {label: 'Midfielder', value: 3},
     {label: 'Striker', value: 4},
   ];
-
-  positionProps: PositionProps = {
-    positions: this.positions,
-  }
 
   constructor(props: IAppProps) {
     super(props);
@@ -49,7 +45,7 @@ export default class Home extends React.Component<IAppProps, IAppState> {
         </Row>
         <Row className="main-area home-top-container">
           <Col xs="10">
-            <PlayerList {...this.positionProps}></PlayerList>
+            <PlayerList positions={this.positions}></PlayerList>
           </Col>
         </Row>
       </Container>

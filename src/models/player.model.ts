@@ -4,4 +4,7 @@ export interface PlayerListItem {
   lastName: string;
   team: string;
   position: number;
+  squadNumber: number;
+  points: number;
+  value: number;
 }
