@@ -7,4 +7,5 @@ export interface PlayerListItem {
   squadNumber: number;
   points: number;
   value: number;
+  image: string;
 }

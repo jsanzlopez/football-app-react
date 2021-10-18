@@ -1,68 +1,137 @@
 import * as React from 'react';
-import { Col, Form, Row } from 'react-bootstrap';
 import { PlayerListItem } from '../../models/player.model';
 import { Position } from '../../models/position.model';
 import ListItem from './ListItem/ListItem';
 import './PlayerList.scss';
+import SearchForm from './SearchForm/SearchForm';
 
-export interface PositionProps {
+export interface PlayerListProps {
   positions: Position[];
   children ?: React.ReactChild;
 }
 
-export interface IAppState {
+export interface PlayerListState {
+  searchText: string;
+  positionFilter: number;
+  listDisplayed: PlayerListItem[];
 }
 
-export default class App extends React.Component<PositionProps, IAppState> {
-  searchText: string = '';
-  positionFilter: number = 0;
+export default class PlayerList extends React.Component<PlayerListProps, PlayerListState> {
   positions: Position[];
-  player: PlayerListItem = {
-    id: '1',
-    name: 'Karim',
-    lastName: 'Benzema',
-    team: 'Real Madrid',
-    position: 4,
-    squadNumber: 9,
-    points: 101,
-    value: 36000000
-  };
-  constructor(props: PositionProps) {
+  static dummyList: PlayerListItem[] = [
+    {
+      id: '1',
+      name: 'Karim',
+      lastName: 'Benzema',
+      team: 'Real Madrid',
+      position: 4,
+      squadNumber: 9,
+      points: 101,
+      value: 36000000,
+      image: 'https://www.realmadrid.com/cs/Satellite?blobcol=urldata&blobheader=image%2Fpng&blobkey=id&blobtable=MungoBlobs&blobwhere=1203422115728&ssbinary=true'
+    },
+    {
+      id: '2',
+      name: 'Thibaut',
+      lastName: 'Courtois',
+      team: 'Real Madrid',
+      position: 1,
+      squadNumber: 1,
+      points: 88,
+      value: 25000000,
+      image: 'https://www.realmadrid.com/cs/Satellite?blobcol=urldata&blobheader=image%2Fpng&blobkey=id&blobtable=MungoBlobs&blobwhere=1203422114860&ssbinary=true'
+    },
+    {
+      id: '3',
+      name: 'David',
+      lastName: 'Alaba',
+      team: 'Real Madrid',
+      position: 2,
+      squadNumber: 4,
+      points: 77,
+      value: 15000000,
+      image: 'https://www.realmadrid.com/cs/Satellite?blobcol=urldata&blobheader=image%2Fpng&blobkey=id&blobtable=MungoBlobs&blobwhere=1203422519507&ssbinary=true'
+    },
+    {
+      id: '4',
+      name: 'Luka',
+      lastName: 'Modric',
+      team: 'Real Madrid',
+      position: 3,
+      squadNumber: 10,
+      points: 63,
+      value: 25200000,
+      image: 'https://www.realmadrid.com/cs/Satellite?blobcol=urldata&blobheader=image%2Fpng&blobkey=id&blobtable=MungoBlobs&blobwhere=1203422115277&ssbinary=true'
+    },
+    {
+      id: '5',
+      name: 'Marco',
+      lastName: 'Asensio',
+      team: 'Real Madrid',
+      position: 4,
+      squadNumber: 11,
+      points: 31,
+      value: 6000000,
+      image: 'https://www.realmadrid.com/cs/Satellite?blobcol=urldata&blobheader=image%2Fpng&blobkey=id&blobtable=MungoBlobs&blobwhere=1203422114536&ssbinary=true'
+    },
+    {
+      id: '6',
+      name: 'Vinicius',
+      lastName: 'Junior',
+      team: 'Real Madrid',
+      position: 4,
+      squadNumber: 20,
+      points: 92,
+      value: 29000000,
+      image: 'https://www.realmadrid.com/cs/Satellite?blobcol=urldata&blobheader=image%2Fpng&blobkey=id&blobtable=MungoBlobs&blobwhere=1203422114806&ssbinary=true'
+    },
+    {
+      id: '7',
+      name: 'Federico',
+      lastName: 'Valverde',
+      team: 'Real Madrid',
+      position: 3,
+      squadNumber: 15,
+      points: 69,
+      value: 15000000,
+      image: 'https://www.realmadrid.com/cs/Satellite?blobcol=urldata&blobheader=image%2Fpng&blobkey=id&blobtable=MungoBlobs&blobwhere=1203422114596&ssbinary=true'
+    },
+  ];
+  constructor(props: PlayerListProps) {
     super(props);
     this.positions = props.positions;
 
     this.state = {
+      searchText: '',
+      positionFilter: 0,
+      listDisplayed: PlayerList.dummyList,
     }
   }
+
+  updatePositionFilter = (newPosition: number) => {
+    this.setState({
+      positionFilter: newPosition,
+      listDisplayed: newPosition === 0 ? PlayerList.dummyList : PlayerList.dummyList.filter(element => element.position === newPosition)
+    })
+  };
+
+  updateNameFilter = (newFilter: string) => {
+    this.setState({
+      searchText: newFilter,
+      listDisplayed: PlayerList.dummyList.filter(element => element.name.toLocaleLowerCase().includes(newFilter) || element.lastName.toLocaleLowerCase().includes(newFilter))
+    })
+  };
 
   public render() {
     return (
       <div>
         <div className="form-area">
-          <Form>
-            <Row>
-              <Col xs="9">
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Search by Player Name</Form.Label>
-                  <Form.Control type="text" placeholder="Enter search term" size="lg" />
-                </Form.Group>
-              </Col>
-
-              <Col xs="3">
-                <Form.Label>Filter by Position:</Form.Label>
-                <Form.Select size="lg">
-                  <option value="0"></option>
-                  <option value="1">Goalkeeper</option>
-                  <option value="2">Defender</option>
-                  <option value="3">Midfielder</option>
-                  <option value="4">Striker</option>
-                </Form.Select>
-              </Col>
-            </Row>
-          </Form>
+          <SearchForm onFilterPosition={this.updatePositionFilter}
+            onFilterName={this.updateNameFilter}>
+          </SearchForm>
         </div>
         <div className="list-area">
-          <ListItem player={this.player}></ListItem>
+          {this.state.listDisplayed.map((item) => <ListItem player={item} key={item.id}></ListItem>)}
         </div>
       </div>
     );

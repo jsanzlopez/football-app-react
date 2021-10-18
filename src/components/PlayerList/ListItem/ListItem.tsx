@@ -13,7 +13,7 @@ export interface IAppState {
   player: PlayerListItem;
 }
 
-export default class App extends React.Component<ListItemProps, IAppState> {
+export default class ListItem extends React.Component<ListItemProps, IAppState> {
   player: PlayerListItem;
   constructor(props: ListItemProps) {
     super(props);
@@ -47,12 +47,12 @@ export default class App extends React.Component<ListItemProps, IAppState> {
 
   public render() {
     return (
-      <div>
+      <div className="pb-3">
         <Card>
           <Row>
             <Col xs="2">
               <div className="image-area position-relative">
-                <img src="https://www.realmadrid.com/cs/Satellite?blobcol=urldata&blobheader=image%2Fpng&blobkey=id&blobtable=MungoBlobs&blobwhere=1203422115728&ssbinary=true" alt="benze"/>
+                <img src={this.player.image} alt="benze"/>
                 <div className="player-number text-white">
                   {this.player.squadNumber}
                 </div>
