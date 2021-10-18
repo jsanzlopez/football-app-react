@@ -10,6 +10,7 @@ export interface ListItemProps {
 }
 
 export interface IAppState {
+  player: PlayerListItem;
 }
 
 export default class App extends React.Component<ListItemProps, IAppState> {
@@ -18,6 +19,7 @@ export default class App extends React.Component<ListItemProps, IAppState> {
     super(props);
     this.player = props.player;
     this.state = {
+      player: props.player,
     }
   }
 
@@ -61,7 +63,7 @@ export default class App extends React.Component<ListItemProps, IAppState> {
               <div>{this.player.team}</div>
               <div>{this.getPositionLabel(this.player.position)}</div>
             </Col>
-            <Col xs="4" className="py-3 text-start text-white text-end me-3">
+            <Col xs="4" className="py-3 text-start text-white text-end">
               <div className="pe-3">
               <div className="points-area fs-2">
                 {this.player.points}
