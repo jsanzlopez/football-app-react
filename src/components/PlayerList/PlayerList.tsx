@@ -28,6 +28,7 @@ export default class PlayerList extends React.Component<PlayerListProps, PlayerL
       squadNumber: 9,
       points: 101,
       value: 36000000,
+      status: 1,
       image: 'https://www.realmadrid.com/cs/Satellite?blobcol=urldata&blobheader=image%2Fpng&blobkey=id&blobtable=MungoBlobs&blobwhere=1203422115728&ssbinary=true'
     },
     {
@@ -39,6 +40,7 @@ export default class PlayerList extends React.Component<PlayerListProps, PlayerL
       squadNumber: 1,
       points: 88,
       value: 25000000,
+      status: 2,
       image: 'https://www.realmadrid.com/cs/Satellite?blobcol=urldata&blobheader=image%2Fpng&blobkey=id&blobtable=MungoBlobs&blobwhere=1203422114860&ssbinary=true'
     },
     {
@@ -50,6 +52,7 @@ export default class PlayerList extends React.Component<PlayerListProps, PlayerL
       squadNumber: 4,
       points: 77,
       value: 15000000,
+      status: 1,
       image: 'https://www.realmadrid.com/cs/Satellite?blobcol=urldata&blobheader=image%2Fpng&blobkey=id&blobtable=MungoBlobs&blobwhere=1203422519507&ssbinary=true'
     },
     {
@@ -61,6 +64,7 @@ export default class PlayerList extends React.Component<PlayerListProps, PlayerL
       squadNumber: 10,
       points: 63,
       value: 25200000,
+      status: 1,
       image: 'https://www.realmadrid.com/cs/Satellite?blobcol=urldata&blobheader=image%2Fpng&blobkey=id&blobtable=MungoBlobs&blobwhere=1203422115277&ssbinary=true'
     },
     {
@@ -72,6 +76,7 @@ export default class PlayerList extends React.Component<PlayerListProps, PlayerL
       squadNumber: 11,
       points: 31,
       value: 6000000,
+      status: 3,
       image: 'https://www.realmadrid.com/cs/Satellite?blobcol=urldata&blobheader=image%2Fpng&blobkey=id&blobtable=MungoBlobs&blobwhere=1203422114536&ssbinary=true'
     },
     {
@@ -83,6 +88,7 @@ export default class PlayerList extends React.Component<PlayerListProps, PlayerL
       squadNumber: 20,
       points: 92,
       value: 29000000,
+      status: 1,
       image: 'https://www.realmadrid.com/cs/Satellite?blobcol=urldata&blobheader=image%2Fpng&blobkey=id&blobtable=MungoBlobs&blobwhere=1203422114806&ssbinary=true'
     },
     {
@@ -94,6 +100,7 @@ export default class PlayerList extends React.Component<PlayerListProps, PlayerL
       squadNumber: 15,
       points: 69,
       value: 15000000,
+      status: 3,
       image: 'https://www.realmadrid.com/cs/Satellite?blobcol=urldata&blobheader=image%2Fpng&blobkey=id&blobtable=MungoBlobs&blobwhere=1203422114596&ssbinary=true'
     },
   ];
@@ -118,7 +125,10 @@ export default class PlayerList extends React.Component<PlayerListProps, PlayerL
   updateNameFilter = (newFilter: string) => {
     this.setState({
       searchText: newFilter,
-      listDisplayed: PlayerList.dummyList.filter(element => element.name.toLocaleLowerCase().includes(newFilter) || element.lastName.toLocaleLowerCase().includes(newFilter))
+      listDisplayed: PlayerList.dummyList.filter((element) => {
+         return element.name.toLocaleLowerCase().includes(newFilter.toLocaleLowerCase())
+          || element.lastName.toLocaleLowerCase().includes(newFilter.toLocaleLowerCase())
+      })
     })
   };
 

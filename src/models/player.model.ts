@@ -8,4 +8,5 @@ export interface PlayerListItem {
   points: number;
   value: number;
   image: string;
+  status: number;
 }
