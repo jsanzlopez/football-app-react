@@ -1,24 +1,11 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { PlayerListItem } from '../../models/player.model';
-import { Position } from '../../models/position.model';
 import ListItem from './ListItem/ListItem';
-import './PlayerList.scss';
 import SearchForm from './SearchForm/SearchForm';
+import './PlayerList.scss';
 
-export interface PlayerListProps {
-  positions: Position[];
-  children ?: React.ReactChild;
-}
-
-export interface PlayerListState {
-  searchText: string;
-  positionFilter: number;
-  listDisplayed: PlayerListItem[];
-}
-
-export default class PlayerList extends React.Component<PlayerListProps, PlayerListState> {
-  positions: Position[];
-  static dummyList: PlayerListItem[] = [
+const PlayerList: React.FunctionComponent<any> = () => {
+  const dummyList: PlayerListItem[] = [
     {
       id: '1',
       name: 'Karim',
@@ -104,46 +91,35 @@ export default class PlayerList extends React.Component<PlayerListProps, PlayerL
       image: 'https://www.realmadrid.com/cs/Satellite?blobcol=urldata&blobheader=image%2Fpng&blobkey=id&blobtable=MungoBlobs&blobwhere=1203422114596&ssbinary=true'
     },
   ];
-  constructor(props: PlayerListProps) {
-    super(props);
-    this.positions = props.positions;
 
-    this.state = {
-      searchText: '',
-      positionFilter: 0,
-      listDisplayed: PlayerList.dummyList,
-    }
-  }
-
-  updatePositionFilter = (newPosition: number) => {
-    this.setState({
-      positionFilter: newPosition,
-      listDisplayed: newPosition === 0 ? PlayerList.dummyList : PlayerList.dummyList.filter(element => element.position === newPosition)
-    })
+  
+  const [listDisplayed, setListDisplayed] = useState(dummyList);
+  const updatePositionFilter = (newPosition: number) => {
+    const result = newPosition === 0 ? dummyList : dummyList.filter(element => element.position === newPosition);
+    setListDisplayed(result);
   };
 
-  updateNameFilter = (newFilter: string) => {
-    this.setState({
-      searchText: newFilter,
-      listDisplayed: PlayerList.dummyList.filter((element) => {
-         return element.name.toLocaleLowerCase().includes(newFilter.toLocaleLowerCase())
-          || element.lastName.toLocaleLowerCase().includes(newFilter.toLocaleLowerCase())
-      })
-    })
+  const updateNameFilter = (newFilter: string) => {
+    const result = dummyList.filter((element) => {
+      return element.name.toLocaleLowerCase().includes(newFilter.toLocaleLowerCase())
+      || element.lastName.toLocaleLowerCase().includes(newFilter.toLocaleLowerCase())
+    });
+    setListDisplayed(result);
   };
+  
 
-  public render() {
-    return (
-      <div>
-        <div className="form-area">
-          <SearchForm onFilterPosition={this.updatePositionFilter}
-            onFilterName={this.updateNameFilter}>
-          </SearchForm>
-        </div>
-        <div className="list-area">
-          {this.state.listDisplayed.map((item) => <ListItem player={item} key={item.id}></ListItem>)}
-        </div>
+  return (
+    <React.Fragment>
+      <div className="form-area">
+        <SearchForm onFilterPosition={updatePositionFilter}
+          onFilterName={updateNameFilter}>
+        </SearchForm>
       </div>
-    );
-  }
+      <div className="list-area">
+        {listDisplayed.map((item) => <ListItem player={item} key={item.id}></ListItem>)}
+      </div>
+    </React.Fragment>
+  );
 }
+
+export default PlayerList;

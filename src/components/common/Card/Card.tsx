@@ -1,25 +1,12 @@
-import React, { Component } from 'react'
+import * as React from 'react';
 import './Card.scss';
-interface Props {
-  
-}
-interface State {
-  
-}
 
-export default class Card extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
+const Card: React.FunctionComponent<any> = (props) => {
+  return (
+    <div className="card-item mb-3">
+      {props.children}
+    </div>
+  );
+};
 
-    this.state = {
-    }
-  }
-
-  render() {
-    return (
-      <div className="card-item">
-        {this.props.children}
-      </div>
-    )
-  }
-}
+export default Card;
