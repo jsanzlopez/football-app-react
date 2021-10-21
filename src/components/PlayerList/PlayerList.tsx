@@ -1,9 +1,10 @@
-import React, { FormEvent, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { PlayerListItem } from '../../models/player.model';
 import ListItem from './ListItem/ListItem';
 import SearchForm from './SearchForm/SearchForm';
 import './PlayerList.scss';
-import { Button, Col, Form, Row } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+import AddPlayer from './AddPlayer/AddPlayer';
 
 const PlayerList: React.FunctionComponent<any> = () => {
   const dummyList: PlayerListItem[] = [
@@ -96,8 +97,7 @@ const PlayerList: React.FunctionComponent<any> = () => {
 
   const [listDisplayed, setListDisplayed] = useState(dummyList);
   const [showAddPlayer, setShowAddPlayer] = useState(false);
-  const firstNameEntered = useRef<HTMLInputElement>(null);
-  const lastNameEntered = useRef<HTMLInputElement>(null);
+ 
 
   const updatePositionFilter = (newPosition: number) => {
     const result = newPosition === 0 ? dummyList : dummyList.filter(element => element.position === newPosition);
@@ -114,21 +114,7 @@ const PlayerList: React.FunctionComponent<any> = () => {
   const toggleAddNewPlayer = () => setShowAddPlayer((state) => !state);
   const closeAddNewPlayer = () => setShowAddPlayer(false);
 
-  const addNewPlayer = (event: FormEvent) => {
-    event.preventDefault();
-
-    const player: PlayerListItem = {
-      id: '15',
-      name: firstNameEntered.current ? firstNameEntered.current.value : '',
-      lastName: lastNameEntered.current ? lastNameEntered.current.value : '',
-      team: 'Atletico de Madrid',
-      position: 2,
-      squadNumber: 15,
-      points: 30,
-      value: 1000000,
-      image: '',
-      status: 1,
-    }
+  const addNewPlayer = (player: PlayerListItem) => {
 
     setListDisplayed([...listDisplayed, player]);
     closeAddNewPlayer();
@@ -144,34 +130,9 @@ const PlayerList: React.FunctionComponent<any> = () => {
             {showAddPlayer ? 'Close Add Player' : 'Add Player'}
           </Button>
         </div>
-        {showAddPlayer &&
-          <div className="add-player-area">
-            <Form onSubmit={addNewPlayer}>
-              <Row>
-                <Col xs="5">
-                  <Form.Group className="mb-3" controlId="firstName">
-                    <Form.Label>First Name</Form.Label>
-                    <Form.Control type="text" ref={firstNameEntered} size="lg"
-                      placeholder="Enter First Name" />
-                  </Form.Group>
-                </Col>
-
-                <Col xs="5">
-                  <Form.Group className="mb-3" controlId="lastName">
-                    <Form.Label>Last Name</Form.Label>
-                    <Form.Control type="text" ref={lastNameEntered} size="lg"
-                      placeholder="Enter Last Name" />
-                  </Form.Group>
-                </Col>
-                <Col xs="2" className="d-flex justify-content-end align-items-center">
-                  <Button type="submit" size="lg">Add</Button>
-                </Col>
-              </Row>
-            </Form>
-          </div>
-        }
+        <hr className="mb-4" />
+        {showAddPlayer && <AddPlayer onAddPlayer={addNewPlayer}></AddPlayer>}
       </div>
-      <hr className="mb-4" />
       <div className="form-area">
         <SearchForm onFilterPosition={updatePositionFilter}
           onFilterName={updateNameFilter}>
