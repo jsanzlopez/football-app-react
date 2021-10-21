@@ -1,46 +1,95 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect, useReducer } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import Card from '../common/Card/Card';
+import './Login.scss'
 
 interface LoginProps {
   onLogin: Function;
 }
 
-const Login: React.FunctionComponent<LoginProps> = (props) => {
+interface LoginAction {
+  type: string,
+  val: string,
+}
 
-  const [enteredEmail, setEnteredEmail] = useState('');
-  const [emailIsValid, setEmailIsValid] = useState(false);
-  const [enteredPassword, setEnteredPassword] = useState('');
-  const [passwordIsValid, setPasswordIsValid] = useState(false);
+const emailReducer = (state: any, action: LoginAction) => {
+  if(action.type === 'USER_INPUT') {
+    return {value: action.val, isValid: action.val.includes('@')};
+  }
+  else if (action.type === 'INPUT_BLUR') {
+    return {value: state.value, isValid: state.value.includes('@')};
+  }
+  return {value: '', isValid: false};
+}
+
+const passwordReducer = (state: any, action: LoginAction) => {
+  if(action.type === 'USER_INPUT') {
+    return {value: action.val, isValid: action.val.trim().length > 6};
+  }
+  else if (action.type === 'INPUT_BLUR') {
+    return {value: state.value, isValid: (state.value as string).trim().length > 6};
+  }
+  return {value: '', isValid: false};
+}
+
+const Login: React.FunctionComponent<LoginProps> = (props) => {
   const [formIsValid, setFormIsValid] = useState(false);
 
-  const emailChangeHandler = (event: any) => {
-    setEnteredEmail(event.target.value);
+  const [emailState, dispatchEmail] = useReducer(emailReducer, {
+    value: '',
+    isValid: false
+  });
 
-    setFormIsValid(
-      event.target.value.includes('@') && enteredPassword.trim().length > 6
-    );
+  const [passwordState, dispatchPassword] = useReducer(passwordReducer, {
+    value: '',
+    isValid: false,
+  });
+
+  const {isValid: isEmailValid} = emailState;
+  const {isValid: isPasswordValid} = passwordState;
+
+  useEffect(() => {
+    const timerToExecute = setTimeout(() => {
+      setFormIsValid(
+        isEmailValid && isPasswordValid
+      );
+    }, 500)
+    return () => {
+      clearTimeout(timerToExecute);
+    }
+  }, [isEmailValid, isPasswordValid])
+
+  const emailChangeHandler = (event: any) => {
+    dispatchEmail({
+      type: 'USER_INPUT',
+      val: event.target.value
+    });
   };
 
   const passwordChangeHandler = (event: any) => {
-    setEnteredPassword(event.target.value);
-
-    setFormIsValid(
-      event.target.value.trim().length > 6 && enteredEmail.includes('@')
-    );
+    dispatchPassword({
+      type: 'USER_INPUT',
+      val: event.target.value
+    });
   };
 
   const validateEmailHandler = () => {
-    setEmailIsValid(enteredEmail.includes('@'));
+    dispatchEmail({
+      type: 'INPUT_BLUR',
+      val: ''
+    });
   };
 
   const validatePasswordHandler = () => {
-    setPasswordIsValid(enteredPassword.trim().length > 6);
+    dispatchPassword({
+      type: 'INPUT_BLUR',
+      val: ''
+    });
   };
 
   const submitHandler = (event: any) => {
     event.preventDefault();
-    props.onLogin(enteredEmail, enteredPassword);
+    props.onLogin(emailState.value, passwordState.value);
   };
 
   return (
@@ -51,22 +100,20 @@ const Login: React.FunctionComponent<LoginProps> = (props) => {
             <Card>
               <div className="p-3">
                 <Form onSubmit={submitHandler}>
-                  <div className={`input-control ${emailIsValid === false ? 'invalid' : ''}`}>
+                  <div className={`input-control ${emailState.isValid === false ? 'invalid' : ''}`}>
                     <Form.Group className="mb-3" controlId="email">
                       <Form.Label>E-Mail</Form.Label>
                       <Form.Control type="email"
-                        id="email"
-                        value={enteredEmail}
+                        value={emailState.value}
                         onChange={emailChangeHandler}
                         onBlur={validateEmailHandler} size="lg" />
                     </Form.Group>
                   </div>
-                  <div className={`input-control ${passwordIsValid === false ? 'invalid' : ''}`}>
+                  <div className={`input-control ${passwordState.isValid === false ? 'invalid' : ''}`}>
                     <Form.Group className="mb-3" controlId="password">
                       <Form.Label>Password</Form.Label>
                       <Form.Control type="password"
-                        id="password"
-                        value={enteredPassword}
+                        value={passwordState.value}
                         onChange={passwordChangeHandler}
                         onBlur={validatePasswordHandler} size="lg" />
                     </Form.Group>
