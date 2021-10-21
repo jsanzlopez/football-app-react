@@ -4,11 +4,7 @@ import moment, { Moment } from 'moment';
 import { Col, Container, Row } from 'react-bootstrap';
 import PlayerList from '../PlayerList/PlayerList';
 
-export interface HomeProps {
-  onLogout: Function;
-}
-
-const Home: React.FunctionComponent<HomeProps> = (props) => {
+const Home: React.FunctionComponent = () => {
   const appversion: string = '0.0.1';
   const date = moment();
 

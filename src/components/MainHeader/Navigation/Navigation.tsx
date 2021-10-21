@@ -1,28 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import AuthContext from '../../../store/auth-context';
 import './Navigation.scss'
 
-export interface NavigationProps {
-  isLoggedIn: boolean;
-  onLogout: Function;
-}
-
-const Navigation = (props: NavigationProps) => {
-
-  const logOut = () => props.onLogout();
+const Navigation = () => {
+  const logOut = () => ctx.onLogOut();
+  const ctx = useContext(AuthContext);
   return (
     <nav className="navigation-bar">
       <ul className="d-flex justify-content-end">
-        {props.isLoggedIn && (
+        {ctx.isLoggedIn && (
           <li>
             <a href="/">Users</a>
           </li>
         )}
-        {props.isLoggedIn && (
+        {ctx.isLoggedIn && (
           <li>
             <a href="/">Admin</a>
           </li>
         )}
-        {props.isLoggedIn && (
+        {ctx.isLoggedIn && (
           <li>
             <button onClick={logOut}>Logout</button>
           </li>
