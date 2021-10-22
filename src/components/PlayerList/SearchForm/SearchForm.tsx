@@ -9,17 +9,17 @@ export interface SearchFormProps {
 
 const SearchForm: React.FunctionComponent<SearchFormProps> = (props) => {
   const positions : Position[] = [
-    {label: 'Goalkeepers', value: 1},
-    {label: 'Defenders', value: 2},
-    {label: 'Midfielders', value: 3},
-    {label: 'Strikers', value: 4}
+    {label: 'Goalkeepers', value: '1'},
+    {label: 'Defenders', value: '2'},
+    {label: 'Midfielders', value: '3'},
+    {label: 'Strikers', value: '4'}
   ];  
   const [nameFilter, setNameFilter] = useState('');
   const [positionFilter, setPositionFilter] = useState(0);
   
   const filterByPosition = (event: any) => {
     setPositionFilter(event.target.value);
-    props.onFilterPosition(parseInt(event.target.value));
+    props.onFilterPosition(event.target.value);
   }
   
   const filterByName = (event: any) => {
@@ -44,7 +44,7 @@ const SearchForm: React.FunctionComponent<SearchFormProps> = (props) => {
             <Form.Label>Filter by Position:</Form.Label>
             <Form.Select size="lg" value={positionFilter}
               onChange={filterByPosition}>
-              <option value={0}>All</option>
+              <option value={'0'}>All</option>
               {positions.map((item) => <option value={item.value} key={item.value}>{item.label}</option>)}
             </Form.Select>
           </Col>

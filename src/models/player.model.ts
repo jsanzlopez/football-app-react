@@ -1,12 +1,10 @@
 export interface PlayerListItem {
   id: string;
   name: string;
-  lastName: string;
   team: string;
-  position: number;
-  squadNumber: number;
+  position: string;
   points: number;
   value: number;
   image: string;
-  status: number;
+  status: string;
 }
