@@ -1,4 +1,3 @@
-import { cleanup } from '@testing-library/react';
 import axios from 'axios';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -6,6 +5,7 @@ import { Spinner } from 'react-bootstrap';
 import { useParams } from 'react-router';
 import { Player } from '../../models/player.model';
 import './PlayerDetail.scss';
+import PlayerDetailCard from './PlayerDetailCard/PlayerDetailCard';
 
 interface IAppProps {
 }
@@ -40,7 +40,6 @@ const PlayerDetail: React.FunctionComponent<IAppProps> = (props) => {
       }),
       playerStatus: data.playerStatus,
       points: data.points,
-      // PositionId
       position: data.PositionId,
       team: {
         badge: data.team.badgeColor,
@@ -69,7 +68,7 @@ const PlayerDetail: React.FunctionComponent<IAppProps> = (props) => {
   return (
     <React.Fragment>
       {isLoading && <Spinner animation="border" role="status"></Spinner>}
-      {!isLoading && !error && <div>{player.name}</div>}
+      {!isLoading && !error && player.id && <PlayerDetailCard player={player}></PlayerDetailCard>}
       {!isLoading && error && <div className="text-danger">{error}</div>}
     </React.Fragment>
   );

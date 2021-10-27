@@ -1,9 +1,14 @@
 import * as React from 'react';
 import './Card.scss';
 
-const Card: React.FunctionComponent<any> = (props) => {
+interface CardProps {
+  clickable: boolean;
+  children: React.ReactNode;
+}
+
+const Card: React.FunctionComponent<CardProps> = (props) => {
   return (
-    <div className="card-item mb-3">
+    <div className={`card-item mb-3 ${props.clickable ? 'clickable': ''}`}>
       {props.children}
     </div>
   );

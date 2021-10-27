@@ -74,7 +74,7 @@ const ListItem: React.FunctionComponent<ListItemProps> = (props) => {
   }
 
   return (
-    <Card>
+    <Card clickable={true}>
       <div onClick={() => props.onClickDetail(props.player.id)}>
         <Row>
           <Col xs="2">

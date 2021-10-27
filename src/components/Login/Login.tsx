@@ -95,7 +95,7 @@ const Login: React.FunctionComponent = () => {
       <Container>
         <Row className="d-flex justify-content-center align-items-center">
           <Col xs="5">
-            <Card>
+            <Card clickable={false}>
               <div className="p-3">
                 <Form onSubmit={submitHandler}>
                   <div className={`input-control ${emailState.isValid === false ? 'invalid' : ''}`}>
