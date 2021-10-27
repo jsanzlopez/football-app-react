@@ -16,12 +16,12 @@ const Navigation = () => {
         )}
         {ctx.isLoggedIn && (
           <li>
-            <NavLink activeClassName='active' to='/player-list'>Players</NavLink>
+            <NavLink activeClassName='active' to='/players'>Players</NavLink>
           </li>
         )}
         {ctx.isLoggedIn && (
           <li>
-            <NavLink activeClassName='active' to='/team-list'>Teams</NavLink>
+            <NavLink activeClassName='active' to='/teams'>Teams</NavLink>
           </li>
         )}
         {ctx.isLoggedIn && (

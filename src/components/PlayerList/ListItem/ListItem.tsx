@@ -9,6 +9,7 @@ import './ListItem.scss';
 
 export interface ListItemProps {
   player: PlayerListItem;
+  onClickDetail: Function;
   children?: React.ReactChild;
 }
 
@@ -74,31 +75,33 @@ const ListItem: React.FunctionComponent<ListItemProps> = (props) => {
 
   return (
     <Card>
-      <Row>
-        <Col xs="2">
-          <div className="image-area position-relative">
-            <img src={props.player.image} alt="benze" />
-          </div>
-        </Col>
-        <Col xs="6" className="py-3 text-start text-white">
-          <div className="fs-2">{props.player.name}
-            <FontAwesomeIcon icon={getStatusIcon(props.player.status)}
-              className={`ms-2 fs-4 text-${getColorClass(props.player.status)}`}></FontAwesomeIcon>
-          </div>
-          <div>{props.player.team}</div>
-          <div>{getPositionLabel(props.player.position)}</div>
-        </Col>
-        <Col xs="4" className="py-3 text-start text-white text-end">
-          <div className="pe-3">
-            <div className="points-area fs-2">
-              {props.player.points}
+      <div onClick={() => props.onClickDetail(props.player.id)}>
+        <Row>
+          <Col xs="2">
+            <div className="image-area position-relative">
+              <img src={props.player.image} alt="benze" />
             </div>
-            <div className="fs-3">
-              <NumberFormat value={props.player.value} displayType={'text'} thousandSeparator={true} prefix={'€'} />
+          </Col>
+          <Col xs="6" className="py-3 text-start text-white">
+            <div className="fs-2">{props.player.name}
+              <FontAwesomeIcon icon={getStatusIcon(props.player.status)}
+                className={`ms-2 fs-4 text-${getColorClass(props.player.status)}`}></FontAwesomeIcon>
             </div>
-          </div>
-        </Col>
-      </Row>
+            <div>{props.player.team}</div>
+            <div>{getPositionLabel(props.player.position)}</div>
+          </Col>
+          <Col xs="4" className="py-3 text-start text-white text-end">
+            <div className="pe-3">
+              <div className="points-area fs-2">
+                {props.player.points}
+              </div>
+              <div className="fs-3">
+                <NumberFormat value={props.player.value} displayType={'text'} thousandSeparator={true} prefix={'€'} />
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </div>
     </Card>
   );
 };

@@ -6,6 +6,7 @@ import './PlayerList.scss';
 import { Button, Spinner } from 'react-bootstrap';
 import AddPlayer from './AddPlayer/AddPlayer';
 import axios from 'axios';
+import { useHistory } from 'react-router';
 
 const PlayerList: React.FunctionComponent<any> = () => {
   const [fullList, setFullList] = useState(([] as PlayerListItem[]));
@@ -13,6 +14,8 @@ const PlayerList: React.FunctionComponent<any> = () => {
   const [showAddPlayer, setShowAddPlayer] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const history = useHistory();
 
   useEffect(() => {
     setIsLoading(true);
@@ -61,6 +64,10 @@ const PlayerList: React.FunctionComponent<any> = () => {
     closeAddNewPlayer();
   }
 
+  const goToPlayerDetail = (id: string) => {
+    history.push(`/players/${id}`);
+  }
+
 
 
   return (
@@ -84,7 +91,10 @@ const PlayerList: React.FunctionComponent<any> = () => {
       </div>
       <div className="list-area">
         {isLoading && <Spinner animation="border" role="status"></Spinner>}
-        {!isLoading && !error && listDisplayed.length > 0 && listDisplayed.map((item) => <ListItem player={item} key={item.id}></ListItem>)}
+        {!isLoading && !error && listDisplayed.length > 0 
+          && listDisplayed.map((item) => {
+          return <ListItem player={item} key={item.id} onClickDetail={goToPlayerDetail}></ListItem>}
+        )}
         {!isLoading && !error && listDisplayed.length === 0 && 'The are no matches'}
         {!isLoading && error && <div className="text-danger">{error}</div>}
       </div>

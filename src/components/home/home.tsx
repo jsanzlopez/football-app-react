@@ -10,7 +10,7 @@ const Home: React.FunctionComponent = () => {
       <Row>
         <Col xs='4'>
           <Card>
-            <Link to='/player-list'>
+            <Link to='/players'>
               <div className="large-image-area">
                 <img src={process.env.PUBLIC_URL + 'soccer-player.jpg'}
                   alt="player" height='200' />
@@ -29,7 +29,7 @@ const Home: React.FunctionComponent = () => {
         </Col>
         <Col xs='4'>
           <Card>
-            <Link to='/team-list'>
+            <Link to='/teams'>
               <div className="large-image-area">
                 <img src={process.env.PUBLIC_URL + 'soccer-team.jpeg'}
                   alt="team" height='200' />
