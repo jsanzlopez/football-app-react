@@ -3,8 +3,10 @@ import * as React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Redirect, Route } from 'react-router-dom';
 import Home from '../../home/home';
+import TeamList from '../../TeamList/TeamList';
 import PlayerList from '../../PlayerList/PlayerList';
 import './Routes.scss';
+import BestEleven from '../../BestEleven/BestEleven';
 
 interface IAppProps {
 }
@@ -38,6 +40,12 @@ const Routes: React.FunctionComponent<IAppProps> = (props) => {
             </Route>
             <Route path='/player-list'>
               <PlayerList></PlayerList>
+            </Route>
+            <Route path='/team-list'>
+              <TeamList></TeamList>
+            </Route>
+            <Route path='/best-eleven'>
+              <BestEleven></BestEleven>
             </Route>
           </Col>
         </Row>
