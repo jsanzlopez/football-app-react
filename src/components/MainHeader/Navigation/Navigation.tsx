@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { NavLink } from 'react-router-dom';
 import AuthContext from '../../../store/auth-context';
 import './Navigation.scss'
 
@@ -10,12 +11,12 @@ const Navigation = () => {
       <ul className="d-flex justify-content-end">
         {ctx.isLoggedIn && (
           <li>
-            <a href="/">Users</a>
+            <NavLink activeClassName='active' to='/home'>Home</NavLink>
           </li>
         )}
         {ctx.isLoggedIn && (
           <li>
-            <a href="/">Admin</a>
+            <NavLink activeClassName='active' to='/player-list'>Player List</NavLink>
           </li>
         )}
         {ctx.isLoggedIn && (

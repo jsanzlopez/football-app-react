@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faCheck, faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { PlayerListItem } from '../../../models/player.model';
 import Card from '../../common/Card/Card';
+import NumberFormat from 'react-number-format';
 import './ListItem.scss';
 
 export interface ListItemProps {
@@ -92,7 +93,9 @@ const ListItem: React.FunctionComponent<ListItemProps> = (props) => {
             <div className="points-area fs-2">
               {props.player.points}
             </div>
-            <div className="fs-3">€ {props.player.value}</div>
+            <div className="fs-3">
+              <NumberFormat value={props.player.value} displayType={'text'} thousandSeparator={true} prefix={'€'} />
+            </div>
           </div>
         </Col>
       </Row>
