@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { PlayerListItem } from '../../models/player.model';
 import ListItem from './ListItem/ListItem';
-import SearchForm from './SearchForm/SearchForm';
+import SearchForm from '../common/SearchForm/SearchForm';
 import './PlayerList.scss';
 import { Button, Spinner } from 'react-bootstrap';
 import AddPlayer from './AddPlayer/AddPlayer';

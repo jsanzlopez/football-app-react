@@ -1,7 +1,12 @@
-import * as React from 'react';
-import { Row, Col } from 'react-bootstrap';
-import { Bar } from 'react-chartjs-2';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import { Row, Col, Button } from 'react-bootstrap';
+import { Bar, Line } from 'react-chartjs-2';
 import NumberFormat from 'react-number-format';
+import { useHistory } from 'react-router';
 import { Player } from '../../../models/player.model';
 import Card from '../../common/Card/Card';
 import './PlayerDetailCard.scss';
@@ -12,7 +17,18 @@ interface PlayerDetailCardProps {
 
 const PlayerDetailCard: React.FunctionComponent<PlayerDetailCardProps> = (props) => {
 
-  const data: any = {
+  const history = useHistory();
+  const { player } = props;
+  const [marketValues, setMarketValues] = useState(([] as any[]));
+
+  useEffect(() => {
+    axios.get<any>(`https://api.laligafantasymarca.com/api/v3/player/${player.id}/market-value`)
+      .then((response) => {
+        setMarketValues(response.data);
+      });
+  }, [player])
+
+  const barData: any = {
     labels: props.player.playerStats.map(item => `J${item.weekNumber}`),
     datasets: [
       {
@@ -29,7 +45,25 @@ const PlayerDetailCard: React.FunctionComponent<PlayerDetailCardProps> = (props)
     ],
   };
 
+  const lineData: any = {
+    labels: marketValues.map(item => moment(item.date).format('DD/MM')),
+    datasets: [
+      {
+        label: 'Market Value',
+        data: marketValues.map(item => item.marketValue),
+        backgroundColor: [
+          '#dc3545',
+        ],
+        borderColor: [
+          '#dc3545',
+        ],
+        borderWidth: 2,
+      },
+    ],
+  };
+
   const options: any = {
+    pointRadius: 0,
     scales: {
       y: {
         ticks: {
@@ -39,8 +73,19 @@ const PlayerDetailCard: React.FunctionComponent<PlayerDetailCardProps> = (props)
     },
   };
 
+  const goBack = () => {
+    history.goBack();
+  };
+
   return (
     <React.Fragment>
+      <div className="mb-3  d-flex justify-content-start">
+        <Button variant="outline-primary"
+          onClick={goBack}>
+          <FontAwesomeIcon icon={faChevronLeft} className="me-2"></FontAwesomeIcon>
+          Back
+        </Button>
+      </div>
       <Card clickable={false}>
         <div className="image-area detail-image-area" style={{ 'height': 'auto', 'position': 'relative' }}>
           <img src={props.player.image} alt={props.player.nickname} height="200" />
@@ -64,10 +109,11 @@ const PlayerDetailCard: React.FunctionComponent<PlayerDetailCardProps> = (props)
         <Row className="p-3 text-center d-flex justify-content-center">
           <Col xs="6">
             <h3 className="mb-2 text-white">Points Chart</h3>
-            <Bar data={data} options={options} />
+            <Bar data={barData} options={options} />
           </Col>
           <Col xs="6">
-          <h3 className="mb-2 text-white">Value Chart</h3>
+            <h3 className="mb-2 text-white">Value Chart</h3>
+            <Line data={lineData} options={options} />
           </Col>
         </Row>
       </Card>
