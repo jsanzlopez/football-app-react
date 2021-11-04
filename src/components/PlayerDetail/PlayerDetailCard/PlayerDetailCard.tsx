@@ -13,7 +13,7 @@ interface PlayerDetailCardProps {
 const PlayerDetailCard: React.FunctionComponent<PlayerDetailCardProps> = (props) => {
 
   const data: any = {
-    labels: props.player.playerStats.map(item => item.weekNumber),
+    labels: props.player.playerStats.map(item => `J${item.weekNumber}`),
     datasets: [
       {
         label: 'Points Per Game',
@@ -31,13 +31,11 @@ const PlayerDetailCard: React.FunctionComponent<PlayerDetailCardProps> = (props)
 
   const options: any = {
     scales: {
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
-          },
+      y: {
+        ticks: {
+          beginAtZero: true,
         },
-      ],
+      },
     },
   };
 
