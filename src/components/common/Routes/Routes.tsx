@@ -7,6 +7,7 @@ import PlayerList from '../../PlayerList/PlayerList';
 import './Routes.scss';
 import BestEleven from '../../BestEleven/BestEleven';
 import PlayerDetail from '../../PlayerDetail/PlayerDetail';
+import TeamDetail from '../../TeamDetail/TeamDetail';
 
 interface IAppProps {
 }
@@ -31,8 +32,11 @@ const Routes: React.FunctionComponent<IAppProps> = (props) => {
             <Route path='/players/:id'>
               <PlayerDetail></PlayerDetail>
             </Route>
-            <Route path='/teams'>
+            <Route path='/teams' exact>
               <TeamList></TeamList>
+            </Route>
+            <Route path='/teams/:id'>
+              <TeamDetail></TeamDetail>
             </Route>
             <Route path='/best-eleven'>
               <BestEleven></BestEleven>

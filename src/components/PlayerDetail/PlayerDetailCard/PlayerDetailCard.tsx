@@ -90,7 +90,7 @@ const PlayerDetailCard: React.FunctionComponent<PlayerDetailCardProps> = (props)
         <div className="image-area detail-image-area" style={{ 'height': 'auto', 'position': 'relative' }}>
           <img src={props.player.image} alt={props.player.nickname} height="200" />
           <div className="team-badge p-2">
-            <img src={props.player.team.badge} alt={props.player.team.shortName} />
+            <img className="full-width" src={props.player.team.badge} alt={props.player.team.shortName} height="100"/>
             <h6 className="text-white pt-2">{props.player.team.name}</h6>
           </div>
         </div>

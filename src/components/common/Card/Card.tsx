@@ -8,7 +8,7 @@ interface CardProps {
 
 const Card: React.FunctionComponent<CardProps> = (props) => {
   return (
-    <div className={`card-item mb-3 ${props.clickable ? 'clickable': ''}`}>
+    <div className={`card-item ${props.clickable ? 'clickable': ''}`}>
       {props.children}
     </div>
   );

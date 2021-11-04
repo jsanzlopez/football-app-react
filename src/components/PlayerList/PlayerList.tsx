@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { PlayerListItem } from '../../models/player.model';
-import ListItem from './ListItem/ListItem';
+import ListItem from '../common/ListItem/ListItem';
 import SearchForm from '../common/SearchForm/SearchForm';
 import './PlayerList.scss';
 import { Button, Spinner } from 'react-bootstrap';
@@ -93,8 +93,12 @@ const PlayerList: React.FunctionComponent<any> = () => {
         {isLoading && <Spinner animation="border" role="status"></Spinner>}
         {!isLoading && !error && listDisplayed.length > 0 
           && listDisplayed.map((item) => {
-          return <ListItem player={item} key={item.id} onClickDetail={goToPlayerDetail}></ListItem>}
-        )}
+          return (
+            <div className="mb-3" key={item.id}>
+              <ListItem player={item} onClickDetail={goToPlayerDetail}></ListItem>
+            </div>
+          )
+        })}
         {!isLoading && !error && listDisplayed.length === 0 && 'The are no matches'}
         {!isLoading && error && <div className="text-danger">{error}</div>}
       </div>

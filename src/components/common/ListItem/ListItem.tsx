@@ -3,7 +3,7 @@ import { Col, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faCheck, faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { PlayerListItem } from '../../../models/player.model';
-import Card from '../../common/Card/Card';
+import Card from '../Card/Card';
 import NumberFormat from 'react-number-format';
 import './ListItem.scss';
 
