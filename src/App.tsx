@@ -1,24 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext } from 'react';
+import './App.scss';
+import Routes from './components/common/Routes/Routes';
+import Login from './components/Login/Login';
+import MainHeader from './components/MainHeader/MainHeader';
+import AuthContext from './store/auth-context';
 
 function App() {
+  const ctx = useContext(AuthContext);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <MainHeader />
+      <main>
+        {!ctx.isLoggedIn && <Login/>}
+        {ctx.isLoggedIn && <Routes/>}
+      </main>
     </div>
   );
 }

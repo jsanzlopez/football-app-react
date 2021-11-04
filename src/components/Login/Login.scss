@@ -1,0 +1,21 @@
+.input-control.invalid input {
+  border-color: red;
+  background: #fbdada;
+}
+
+.input-control {
+  input {
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 4px;
+    font-size: large;
+  }
+}
+
+.form-buttons-area {
+  display: flex;
+  justify-content: space-around;
+  button {
+    width: 150px;
+  }
+}
