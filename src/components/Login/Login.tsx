@@ -1,93 +1,25 @@
-import React, { Fragment, useState, useEffect, useReducer, useContext } from 'react';
-import { Button, Col, Container, Form, Row } from 'react-bootstrap';
+import React, { Fragment, useContext } from 'react';
+import { Button, Col, Container, Row } from 'react-bootstrap';
+import { FieldControl, FieldGroup, FormBuilder, Validators } from 'react-reactive-form';
 import AuthContext from '../../store/auth-context';
 import Card from '../common/Card/Card';
 import './Login.scss'
 
-interface LoginAction {
-  type: string,
-  val: string,
-}
-
-const emailReducer = (state: any, action: LoginAction) => {
-  if(action.type === 'USER_INPUT') {
-    return {value: action.val, isValid: action.val.includes('@')};
-  }
-  else if (action.type === 'INPUT_BLUR') {
-    return {value: state.value, isValid: state.value.includes('@')};
-  }
-  return {value: '', isValid: false};
-}
-
-const passwordReducer = (state: any, action: LoginAction) => {
-  if(action.type === 'USER_INPUT') {
-    return {value: action.val, isValid: action.val.trim().length > 6};
-  }
-  else if (action.type === 'INPUT_BLUR') {
-    return {value: state.value, isValid: (state.value as string).trim().length > 6};
-  }
-  return {value: '', isValid: false};
-}
-
 const Login: React.FunctionComponent = () => {
-  const [formIsValid, setFormIsValid] = useState(false);
   const ctx = useContext(AuthContext);
 
-  const [emailState, dispatchEmail] = useReducer(emailReducer, {
-    value: '',
-    isValid: false
+  const loginForm = FormBuilder.group({
+    username: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.min(6)]],
   });
 
-  const [passwordState, dispatchPassword] = useReducer(passwordReducer, {
-    value: '',
-    isValid: false,
-  });
-
-  const {isValid: isEmailValid} = emailState;
-  const {isValid: isPasswordValid} = passwordState;
-
-  useEffect(() => {
-    const timerToExecute = setTimeout(() => {
-      setFormIsValid(
-        isEmailValid && isPasswordValid
-      );
-    }, 500)
-    return () => {
-      clearTimeout(timerToExecute);
-    }
-  }, [isEmailValid, isPasswordValid])
-
-  const emailChangeHandler = (event: any) => {
-    dispatchEmail({
-      type: 'USER_INPUT',
-      val: event.target.value
-    });
-  };
-
-  const passwordChangeHandler = (event: any) => {
-    dispatchPassword({
-      type: 'USER_INPUT',
-      val: event.target.value
-    });
-  };
-
-  const validateEmailHandler = () => {
-    dispatchEmail({
-      type: 'INPUT_BLUR',
-      val: ''
-    });
-  };
-
-  const validatePasswordHandler = () => {
-    dispatchPassword({
-      type: 'INPUT_BLUR',
-      val: ''
-    });
-  };
+  const handleReset = () => {
+    loginForm.reset();
+  }
 
   const submitHandler = (event: any) => {
     event.preventDefault();
-    ctx.onLogIn(emailState.value, passwordState.value);
+    ctx.onLogIn(loginForm.get('username').value, loginForm.get('password').value);
   };
 
   return (
@@ -97,34 +29,49 @@ const Login: React.FunctionComponent = () => {
           <Col xs="5">
             <Card clickable={false}>
               <div className="p-3">
-                <Form onSubmit={submitHandler}>
-                  <div className={`input-control ${emailState.isValid === false ? 'invalid' : ''}`}>
-                    <Form.Group className="mb-3" controlId="email">
-                      <Form.Label>E-Mail</Form.Label>
-                      <Form.Control type="email"
-                        value={emailState.value}
-                        onChange={emailChangeHandler}
-                        onBlur={validateEmailHandler} size="lg" />
-                    </Form.Group>
-                  </div>
-                  <div className={`input-control ${passwordState.isValid === false ? 'invalid' : ''}`}>
-                    <Form.Group className="mb-3" controlId="password">
-                      <Form.Label>Password</Form.Label>
-                      <Form.Control type="password"
-                        value={passwordState.value}
-                        onChange={passwordChangeHandler}
-                        onBlur={validatePasswordHandler} size="lg" />
-                    </Form.Group>
-                  </div>
-                  <div className="submit-button-area">
-                    <Button type="submit" 
-                      variant={formIsValid ? 'primary' : 'secondary'} 
-                      disabled={!formIsValid} 
-                      size="lg">
-                        Login
-                    </Button>
-                  </div>
-                </Form>
+                <FieldGroup
+                  control={loginForm}
+                  render={({ get, invalid }) => (
+                    <form onSubmit={submitHandler}>
+                      <label htmlFor="username">UserName:</label>
+                      <FieldControl
+                        name="username"
+                        render={({ handler, touched, hasError }) => (
+                          <div className="input-control">
+                            <input {...handler()} />
+                            <span className="text-danger">
+                              {touched
+                                && hasError("required")
+                                && "Username is required"}
+                            </span>
+                          </div>
+                        )}
+                      />
+                      <label htmlFor="password">Password:</label>
+                      <FieldControl
+                        name="password"
+                        render={({ handler, touched, hasError }) => (
+                          <div className="input-control">
+                            <input {...handler()} />
+                            <span>
+                              {touched
+                                && hasError("required")
+                                && "Password is required"}
+                            </span>
+                          </div>
+                        )}
+                      />
+                      <div className="form-buttons-area pt-3">
+                        <Button type="button" size="lg" onClick={handleReset}>
+                          Reset
+                        </Button>
+                        <Button type="submit" disabled={loginForm.invalid} size="lg">
+                          Login
+                        </Button>
+                      </div>
+                    </form>
+                  )}
+                />
               </div>
             </Card>
           </Col>
