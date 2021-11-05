@@ -27,10 +27,10 @@ export interface Player {
   points: number
   // PositionId
   position: number
-  team: Team;
+  team: PlayerTeam;
 }
 
-export interface Team {
+export interface PlayerTeam {
   badge: string;
   dspId: number;
   id: string;
