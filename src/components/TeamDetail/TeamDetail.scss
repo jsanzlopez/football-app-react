@@ -3,3 +3,18 @@
   background-image: linear-gradient(to right, rgb(51, 51, 51) , transparent);
   font-size: 24px;
 }
+
+.field-area {
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.players-area {
+  position: absolute;
+  top: 0;
+  width: 336px;
+  height: 100%;
+  z-index: 2;
+}

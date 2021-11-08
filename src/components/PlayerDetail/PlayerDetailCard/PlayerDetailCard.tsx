@@ -74,7 +74,7 @@ const PlayerDetailCard: React.FunctionComponent<PlayerDetailCardProps> = (props)
   };
 
   const goBack = () => {
-    navigate(-1);
+    navigate('/players');
   };
 
   return (

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Card from '../common/Card/Card';

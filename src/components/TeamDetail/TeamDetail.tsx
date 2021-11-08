@@ -98,7 +98,7 @@ const TeamDetail: React.FunctionComponent = () => {
   }, [teamId])
 
   const goBack = () => {
-    navigate(-1);
+    navigate('/teams');
   }
 
   return (
@@ -120,12 +120,24 @@ const TeamDetail: React.FunctionComponent = () => {
       </Row>
       {isLoading && <Spinner animation="border" role="status"></Spinner>}
       {!isLoading && !error &&
-        <Row>
-          <Col xs="4">
-            Best 11
+        <Row className="mt-4">
+          <Col xs="4" className="position-relative">
+            <div className="field-area">
+              <img src='/field-outline.png' alt="field" />
+            </div>
+            <div className="players-area">
+              Holi
+            </div>
           </Col>
           <Col xs="4">
-            Calendar
+            {!isLoading && !error && calendar.length > 0 
+            && calendar.map((item) => {
+              return (
+                <div className="calendar-item" key={item.time.format('DD/MM/YYYY')}>
+                  {item.date.format('DD-MM-YYYY')}
+                </div>
+              )
+            })}
           </Col>
           <Col xs="4">
             Players
@@ -133,7 +145,6 @@ const TeamDetail: React.FunctionComponent = () => {
         </Row>
       }
       {!isLoading && error && <div className="text-danger">{error}</div>}
-      <div>{teamId}</div>
     </React.Fragment>
   );
 };

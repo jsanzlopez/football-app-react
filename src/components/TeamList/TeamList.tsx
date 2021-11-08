@@ -43,7 +43,11 @@ const TeamList: React.FunctionComponent = () => {
     <React.Fragment>
       <div className="list-area">
         <Row>
-          {isLoading && <Spinner animation="border" role="status"></Spinner>}
+          {isLoading && 
+          <div className="d-flex justify-content-center align-items-center">
+            <Spinner animation="border" role="status" />
+          </div>
+          }
           {!isLoading && !error && listDisplayed.length > 0
             && listDisplayed.map((item) => {
               return (
