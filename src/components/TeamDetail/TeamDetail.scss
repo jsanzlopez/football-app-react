@@ -18,3 +18,14 @@
   height: 100%;
   z-index: 2;
 }
+
+.mid-col {
+  max-height: 629px;
+  overflow-y: auto;
+  .mid-item {
+    border: 1px solid black;
+    border-radius: 4px;
+    background-color: rgb(51, 51, 51);
+    color: white;
+  }
+}

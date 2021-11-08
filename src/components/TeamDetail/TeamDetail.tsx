@@ -47,7 +47,6 @@ const TeamDetail: React.FunctionComponent = () => {
             }
           })
         };
-
         setIsLoading(false);
         setTeamDisplayed(modifiedData);
       })
@@ -118,7 +117,7 @@ const TeamDetail: React.FunctionComponent = () => {
           </div>
         </Col>
       </Row>
-      {isLoading && <Spinner animation="border" role="status"></Spinner>}
+      {isLoading && <Spinner animation="border" role="status" className="pt-3"></Spinner>}
       {!isLoading && !error &&
         <Row className="mt-4">
           <Col xs="4" className="position-relative">
@@ -129,18 +128,40 @@ const TeamDetail: React.FunctionComponent = () => {
               Holi
             </div>
           </Col>
-          <Col xs="4">
+          <Col xs="4" className="mid-col">
             {!isLoading && !error && calendar.length > 0 
             && calendar.map((item) => {
               return (
-                <div className="calendar-item" key={item.time.format('DD/MM/YYYY')}>
-                  {item.date.format('DD-MM-YYYY')}
+                <div className="mid-item p-3 mb-3" key={item.time.format('DD/MM/YYYY')}>
+                  <div className="date-time">{item.date.format('DD-MM-YYYY')}</div>
+                  <div className="results-area d-flex justify-content-around align-items-center">
+                    <div className="home-team">
+                      <img src={item.local.badge} alt="home" height="60" />
+                    </div>
+                    <div className="home-score fs-2">{item.localScore !== null ? item.localScore : ''}</div>
+                    -
+                    <div className="away-score fs-2">{item.visitorScore !== null ? item.visitorScore : ''}</div>
+                    <div className="away-team">
+                      <img src={item.visitor.badge} alt="home" height="60" />
+                    </div>
+                  </div>
                 </div>
               )
             })}
           </Col>
-          <Col xs="4">
-            Players
+          <Col xs="4" className="mid-col">
+          {!isLoading && !error && teamDisplayed.players && teamDisplayed.players.length > 0 
+            && teamDisplayed.players.map((player) => {
+              return (
+                <div className="mid-item p-3 mb-3 d-flex justify-content-between align-items-center" key={player.id}>
+                  <div className="name-area text-start">
+                    <div>{player.nickname}</div>
+                    <div>{player.position}</div>
+                  </div>
+                  <div className="player-points fs-2">{player.points}</div>
+                </div>
+              )
+            })}
           </Col>
         </Row>
       }
