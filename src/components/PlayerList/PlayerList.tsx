@@ -6,7 +6,7 @@ import './PlayerList.scss';
 import { Button, Spinner } from 'react-bootstrap';
 import AddPlayer from './AddPlayer/AddPlayer';
 import axios from 'axios';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 
 const PlayerList: React.FunctionComponent<any> = () => {
   const [fullList, setFullList] = useState(([] as PlayerListItem[]));
@@ -15,7 +15,7 @@ const PlayerList: React.FunctionComponent<any> = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsLoading(true);
@@ -65,7 +65,7 @@ const PlayerList: React.FunctionComponent<any> = () => {
   }
 
   const goToPlayerDetail = (id: string) => {
-    history.push(`/players/${id}`);
+    navigate(`/players/${id}`, {replace: true});
   }
 
 

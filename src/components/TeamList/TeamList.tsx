@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Col, Row, Spinner } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { TeamListItem } from '../../models/team.model';
 import Card from '../common/Card/Card';
 
@@ -11,7 +11,7 @@ const TeamList: React.FunctionComponent = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsLoading(true);
@@ -35,7 +35,7 @@ const TeamList: React.FunctionComponent = () => {
   }, [])
 
   const goToTeamDetail = (id: string) => {
-    history.push(`/teams/${id}`);
+    navigate(`/teams/${id}`, {replace: true});
   }
 
 

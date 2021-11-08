@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { Redirect, Route } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Home from '../../home/home';
 import TeamList from '../../TeamList/TeamList';
 import PlayerList from '../../PlayerList/PlayerList';
@@ -12,35 +12,23 @@ import TeamDetail from '../../TeamDetail/TeamDetail';
 interface IAppProps {
 }
 
-const Routes: React.FunctionComponent<IAppProps> = (props) => {
+const RoutesFile: React.FunctionComponent<IAppProps> = (props) => {
 
   return (
     <React.Fragment>
       <Container>
-        
+
         <Row className='main-area home-top-container'>
           <Col xs='10'>
-            <Route path='/' exact>
-              <Redirect to='/home'></Redirect>
-            </Route>
-            <Route path='/home'>
-              <Home></Home>
-            </Route>
-            <Route path='/players' exact>
-              <PlayerList></PlayerList>
-            </Route>
-            <Route path='/players/:id'>
-              <PlayerDetail></PlayerDetail>
-            </Route>
-            <Route path='/teams' exact>
-              <TeamList></TeamList>
-            </Route>
-            <Route path='/teams/:id'>
-              <TeamDetail></TeamDetail>
-            </Route>
-            <Route path='/best-eleven'>
-              <BestEleven></BestEleven>
-            </Route>
+            <Routes>
+              <Route path='/' element={<Navigate replace to='/home' />} />
+              <Route path='/home' element={<Home></Home>} />
+              <Route path='/players' element={<PlayerList></PlayerList>} />
+              <Route path='/players/:id' element={<PlayerDetail></PlayerDetail>} />
+              <Route path='/teams' element={<TeamList></TeamList>} />
+              <Route path='/teams/:id' element={<TeamDetail></TeamDetail>} />
+              <Route path='/best-eleven' element={<BestEleven></BestEleven>} />
+            </Routes>
           </Col>
         </Row>
       </Container>
@@ -48,4 +36,4 @@ const Routes: React.FunctionComponent<IAppProps> = (props) => {
   );
 };
 
-export default Routes;
+export default RoutesFile;

@@ -11,22 +11,22 @@ const Navigation = () => {
       <ul className="d-flex justify-content-end">
         {ctx.isLoggedIn && (
           <li>
-            <NavLink activeClassName='active' to='/home'>Home</NavLink>
+            <NavLink className={(navData) => navData.isActive ? 'active' : '' } to='/home'>Home</NavLink>
           </li>
         )}
         {ctx.isLoggedIn && (
           <li>
-            <NavLink activeClassName='active' to='/players'>Players</NavLink>
+            <NavLink className={(navData) => navData.isActive ? 'active' : '' } to='/players'>Players</NavLink>
           </li>
         )}
         {ctx.isLoggedIn && (
           <li>
-            <NavLink activeClassName='active' to='/teams'>Teams</NavLink>
+            <NavLink className={(navData) => navData.isActive ? 'active' : '' } to='/teams'>Teams</NavLink>
           </li>
         )}
         {ctx.isLoggedIn && (
           <li>
-            <NavLink activeClassName='active' to='/best-eleven'>Best 11 Tool</NavLink>
+            <NavLink className={(navData) => navData.isActive ? 'active' : '' } to='/best-eleven'>Best 11 Tool</NavLink>
           </li>
         )}
         {ctx.isLoggedIn && (

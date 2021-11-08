@@ -4,15 +4,11 @@ import axios from 'axios';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Row, Spinner } from 'react-bootstrap';
-import { useHistory, useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { Calendar } from '../../models/calendar.model';
 import { PlayerStats } from '../../models/player.model';
 import { Team } from '../../models/team.model';
 import './TeamDetail.scss'
-
-interface TeamDetailParams {
-  id: string;
-}
 
 const TeamDetail: React.FunctionComponent = () => {
   const [teamDisplayed, setTeamDisplayed] = useState(({} as Team));
@@ -20,10 +16,9 @@ const TeamDetail: React.FunctionComponent = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const params: TeamDetailParams = useParams();
-  const teamId = params.id;
+  const { id: teamId }: any = useParams();
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsLoading(true);
@@ -103,7 +98,7 @@ const TeamDetail: React.FunctionComponent = () => {
   }, [teamId])
 
   const goBack = () => {
-    history.goBack();
+    navigate(-1);
   }
 
   return (

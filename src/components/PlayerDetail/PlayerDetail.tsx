@@ -7,15 +7,8 @@ import { Player } from '../../models/player.model';
 import './PlayerDetail.scss';
 import PlayerDetailCard from './PlayerDetailCard/PlayerDetailCard';
 
-interface IAppProps {
-}
-
-interface PlayerDetailParams {
-  id: string;
-}
-
-const PlayerDetail: React.FunctionComponent<IAppProps> = (props) => {
-  const params: PlayerDetailParams = useParams();
+const PlayerDetail: React.FunctionComponent = () => {
+  const params: any = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [player, setPlayer] = useState(({} as Player));

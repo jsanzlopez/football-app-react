@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import { Bar, Line } from 'react-chartjs-2';
 import NumberFormat from 'react-number-format';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { Player } from '../../../models/player.model';
 import Card from '../../common/Card/Card';
 import './PlayerDetailCard.scss';
@@ -17,7 +17,7 @@ interface PlayerDetailCardProps {
 
 const PlayerDetailCard: React.FunctionComponent<PlayerDetailCardProps> = (props) => {
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const { player } = props;
   const [marketValues, setMarketValues] = useState(([] as any[]));
 
@@ -74,7 +74,7 @@ const PlayerDetailCard: React.FunctionComponent<PlayerDetailCardProps> = (props)
   };
 
   const goBack = () => {
-    history.goBack();
+    navigate(-1);
   };
 
   return (
